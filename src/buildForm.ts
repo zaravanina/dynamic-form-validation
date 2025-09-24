@@ -1,3 +1,5 @@
+import { submitFormEntry } from "./data.js";
+import displayAllFormEntries from "./displayAllFormEntries.js";
 import type { FieldConfig, FieldState } from "./models/data.interface.js";
 import validateField from "./validateField.js";
 
@@ -8,7 +10,9 @@ const labelCls = "mb-1 block text-sm font-medium text-gray-700";
 const groupCls = "mb-4";
 const errorTextCls = "mt-1 text-sm text-rose-600";
 const buttonCls =
-  "inline-flex w-full items-center justify-center rounded-lg bg-indigo-600 px-4 py-2.5 font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500";
+  "cursor-pointer inline-flex w-full items-center justify-center rounded-lg bg-indigo-600 px-4 py-2.5 font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500";
+const buttonSecondaryCls =
+  "cursor-pointer inline-flex w-full items-center justify-center rounded-lg bg-transparent px-4 py-2.5 font-medium text-blue-600";
 
 const createRegex = (s: string) => new RegExp(s);
 
@@ -30,6 +34,7 @@ export default function buildForm(fields: FieldConfig[]) {
 
   const states: Record<string, FieldState> = {};
 
+  //fields
   fields.forEach((f) => {
     const group = document.createElement("div");
     group.className = groupCls;
@@ -61,19 +66,31 @@ export default function buildForm(fields: FieldConfig[]) {
     };
   });
 
+  //submit button
   const submit = document.createElement("button");
   submit.type = "submit";
   submit.className = buttonCls;
   submit.textContent = "Submit";
   form.appendChild(submit);
 
+  //success message
   const success = document.createElement("p");
   success.className =
     "mt-4 rounded-lg bg-emerald-50 px-3 py-2 text-emerald-700";
   success.style.display = "none";
   form.appendChild(success);
 
+  //go to all entries button
+  const goToAllEntriesButton = document.createElement("button");
+  goToAllEntriesButton.type = "button";
+  goToAllEntriesButton.className = buttonSecondaryCls;
+  goToAllEntriesButton.textContent = "View All Entries";
+  goToAllEntriesButton.addEventListener("click", async () => {
+    await displayAllFormEntries();
+  });
+
   formSection.appendChild(form);
+  formSection.appendChild(goToAllEntriesButton);
   app.innerHTML = "";
   app.appendChild(formSection);
 
@@ -84,7 +101,8 @@ export default function buildForm(fields: FieldConfig[]) {
     st.input.addEventListener("input", validate);
   });
 
-  form.addEventListener("submit", (e) => {
+  //on submit
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
     let allOK = true;
     Object.values(states).forEach((st) => {
@@ -96,9 +114,11 @@ export default function buildForm(fields: FieldConfig[]) {
       Object.entries(states).forEach(([alias, st]) => {
         data[alias] = st.input.value.trim();
       });
-      success.textContent = "✅ Form valid! " + JSON.stringify(data);
+      await submitFormEntry(data);
+      success.textContent =
+        "✅ Form valid! Thank you " + JSON.stringify(data.name);
       success.style.display = "block";
-      // form.reset();
+      form.reset();
     } else {
       success.style.display = "none";
     }

@@ -1,0 +1,42 @@
+{
+  "folders": [
+    {
+      "path": "." // the project root
+    }
+  ],
+  "settings": {
+    // Use the project's TypeScript, not VS Code's built-in
+    "typescript.tsdk": "node_modules/typescript/lib",
+
+    // Editor preferences
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+    // Linting/validation
+    "eslint.enable": true,
+    "eslint.packageManager": "npm",
+
+    // Tailwind CSS IntelliSense
+    "tailwindCSS.includeLanguages": {
+      "typescript": "html",
+      "typescriptreact": "html"
+    },
+    "tailwindCSS.experimental.classRegex": [
+      ["className\\s*=\\s*\"([^\"]*)\"", "([^\"]*)"],
+      ["class\\s*=\\s*\"([^\"]*)\"", "([^\"]*)"]
+    ],
+
+    // Exclude build + dependencies from search
+    "files.exclude": {
+      "dist": true,
+      "node_modules": true
+    }
+  },
+  "extensions": {
+    "recommendations": [
+      "esbenp.prettier-vscode",
+      "dbaeumer.vscode-eslint",
+      "bradlc.vscode-tailwindcss"
+    ]
+  }
+}

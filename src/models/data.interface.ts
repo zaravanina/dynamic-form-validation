@@ -13,3 +13,12 @@ export type FieldState = {
   regex: RegExp;
   message: string;
 };
+
+export type FormEntryData = {
+  name: string;
+  phone?: number;
+  email: string;
+  password: string;
+  id: number;
+  created_at: string;
+};
