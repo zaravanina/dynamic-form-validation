@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Name",
+    "alias": "name",
+    "type": "text",
+    "regex": "^[A-Za-zÀ-ÿ' -]{2,40}$",
+    "message": "Name must be 2–40 letters (letters, spaces, ' or -).",
+    "placeholder": "Your full name"
+  },
+  {
+    "title": "Email",
+    "alias": "email",
+    "type": "email",
+    "regex": "^[\\w.-]+@[\\w.-]+\\.[A-Za-z]{2,}$",
+    "message": "Please enter a valid email address.",
+    "placeholder": "you@example.com"
+  },
+  {
+    "title": "Password",
+    "alias": "password",
+    "type": "password",
+    "regex": "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d).{8,}$",
+    "message": "Password must have 8+ chars, incl. upper, lower, and a number.",
+    "placeholder": "Min 8 chars, A-z & 0-9"
+  }
+]
