@@ -16,6 +16,8 @@ npm run build
 npm run watch:ts
 npm run watch:css
 
+or npm run dev to run both
+
 ➕ Adding New Fields
 
 All fields are defined in config/fields.json
